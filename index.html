@@ -9,6 +9,32 @@
 <body>
   <div class="container">
     <h1>Крестики-нолики</h1>
+
+    <div class="settings">
+      <div>
+        <label for="player1Symbol">Символ игрока 1:</label>
+        <select id="player1Symbol">
+          <option value="X">X</option>
+          <option value="A">A</option>
+          <option value="★">★</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="player2Symbol">Символ игрока 2:</label>
+        <select id="player2Symbol">
+          <option value="O">O</option>
+          <option value="B">B</option>
+          <option value="●">●</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="scoreboard">
+      <p>Счёт игрока 1: <span id="score1">0</span></p>
+      <p>Счёт игрока 2: <span id="score2">0</span></p>
+    </div>
+
     <p id="status">Ход игрока: X</p>
 
     <div class="board" id="board">

@@ -14,10 +14,37 @@ body {
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+  max-width: 500px;
+  width: 100%;
 }
 
 h1 {
   margin-bottom: 15px;
+}
+
+.settings {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.settings div {
+  flex: 1;
+}
+
+select {
+  padding: 8px;
+  margin-top: 5px;
+  width: 100%;
+}
+
+.scoreboard {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
+  font-weight: bold;
 }
 
 #status {
