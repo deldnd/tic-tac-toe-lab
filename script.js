@@ -1,64 +1,80 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f2f2f2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+const cells = document.querySelectorAll(".cell");
+const statusText = document.getElementById("status");
+const restartBtn = document.getElementById("restartBtn");
+
+let board = ["", "", "", "", "", "", "", "", ""];
+let currentPlayer = "X";
+let gameActive = true;
+
+const winPatterns = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6]
+];
+
+function handleCellClick(event) {
+  const index = event.target.dataset.index;
+
+  if (board[index] !== "" || !gameActive) {
+    return;
+  }
+
+  board[index] = currentPlayer;
+  event.target.textContent = currentPlayer;
+
+  checkWinner();
 }
 
-.container {
-  text-align: center;
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+function checkWinner() {
+  let roundWon = false;
+
+  for (let pattern of winPatterns) {
+    const [a, b, c] = pattern;
+
+    if (
+      board[a] &&
+      board[a] === board[b] &&
+      board[a] === board[c]
+    ) {
+      roundWon = true;
+      break;
+    }
+  }
+
+  if (roundWon) {
+    statusText.textContent = `Победил игрок: ${currentPlayer}`;
+    gameActive = false;
+    return;
+  }
+
+  if (!board.includes("")) {
+    statusText.textContent = "Ничья!";
+    gameActive = false;
+    return;
+  }
+
+  currentPlayer = currentPlayer === "X" ? "O" : "X";
+  statusText.textContent = `Ход игрока: ${currentPlayer}`;
 }
 
-h1 {
-  margin-bottom: 15px;
+function restartGame() {
+  board = ["", "", "", "", "", "", "", "", ""];
+  currentPlayer = "X";
+  gameActive = true;
+  statusText.textContent = `Ход игрока: ${currentPlayer}`;
+
+  cells.forEach(cell => {
+    cell.textContent = "";
+  });
 }
 
-#status {
-  font-size: 18px;
-  margin-bottom: 20px;
-}
+cells.forEach(cell => {
+  cell.addEventListener("click", handleCellClick);
+});
 
-.board {
-  display: grid;
-  grid-template-columns: repeat(3, 90px);
-  grid-template-rows: repeat(3, 90px);
-  gap: 8px;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.cell {
-  width: 90px;
-  height: 90px;
-  font-size: 32px;
-  font-weight: bold;
-  border: 2px solid #333;
-  background: #fff;
-  cursor: pointer;
-  border-radius: 8px;
-}
-
-.cell:hover {
-  background: #f0f0f0;
-}
-
-#restartBtn {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border: none;
-  background: #4caf50;
-  color: white;
-  border-radius: 8px;
-}
-
-#restartBtn:hover {
-  background: #45a049;
-}
+restartBtn.addEventListener("click", restartGame);
